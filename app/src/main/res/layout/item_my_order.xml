@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:strokeWidth="1dp"
+    app:strokeColor="?attr/colorOutline"
+    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Sección: Fecha y Total -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvMyOrderDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                tools:text="Pedido del 16/11/2025" />
+
+            <TextView
+                android:id="@+id/tvMyOrderTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                tools:text="S/ 125.50" />
+        </LinearLayout>
+
+        <!-- Estado -->
+        <TextView
+            android:id="@+id/tvMyOrderStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
+            tools:text="Estado: en_camino" />
+
+        <!-- Productos -->
+        <TextView
+            android:id="@+id/tvMyOrderItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:padding="10dp"
+            android:background="?attr/colorSurfaceVariant"
+            android:textSize="13sp"
+            tools:text="- Torta de Chocolate x 1\n- Pie de Manzana x 2\n- Pionono x 3" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

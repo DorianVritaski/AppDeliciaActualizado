@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".views.PaymentMethodActivity">
+
+    <TextView
+        android:id="@+id/tvPaymentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elige un método de pago"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPaymentTitle"
+        tools:text="Total a Pagar: S/ 125.00" />
+
+    <RadioGroup
+        android:id="@+id/rgPaymentOptions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalAmount">
+
+        <!-- Opción 1: Pagar al Recoger (se mostrará solo para 'pickup') -->
+        <RadioButton
+            android:id="@+id/rbPayOnPickup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pagar al Recoger (Efectivo o Tarjeta en tienda)"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <!-- Opción 2: Pago Contraentrega (se mostrará solo para 'delivery') -->
+        <RadioButton
+            android:id="@+id/rbPayOnDelivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pago Contraentrega (Efectivo)"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <!-- Opción 3: Pagar con Tarjeta (se mostrará siempre) -->
+        <RadioButton
+            android:id="@+id/rbPayWithCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pagar ahora con Tarjeta"
+            android:textSize="18sp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnConfirmOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Confirmar Pedido"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

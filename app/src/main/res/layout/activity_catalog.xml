@@ -1,0 +1,62 @@
+<!-- En activity_catalog.xml -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light_gray"
+    tools:context=".views.CatalogActivity">
+
+    <!-- AppBarLayout para contener la Toolbar (sin cambios) -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutCatalog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarCatalog"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/black" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Tu RecyclerView (sin cambios) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" /> <!-- Opcional: empezar oculto -->
+
+    <!-- ======================= INICIO DEL BLOQUE A AÑADIR ======================= -->
+    <ProgressBar
+        android:id="@+id/progressBarCatalog"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
+    <!-- ======================== FIN DEL BLOQUE A AÑADIR ========================= -->
+
+
+    <!-- Tu FloatingActionButton (sin cambios) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_shopping_cart"
+        app:backgroundTint="@color/gold_primary"
+        app:tint="@color/black" /> <!-- Opcional: para que el icono se vea bien -->
+    <!-- android:contentDescription="@string/view_shopping_cart" -->
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

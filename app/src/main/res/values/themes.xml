@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ========================================================= -->
+    <!-- BASE THEME – Material You (Material 3)                     -->
+    <!-- ========================================================= -->
+    <style name="Base.Theme.AppDelicia01" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- ================= COLORS PRIMARIOS ================= -->
+        <item name="colorPrimary">@color/gold_primary</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryContainer">@color/gold_light</item>
+        <item name="colorOnPrimaryContainer">@color/gold_dark</item>
+
+        <!-- ================ SUPERFICIES / FONDOS ================ -->
+        <item name="android:colorBackground">@color/off_white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorSurfaceVariant">@color/grey_100</item>
+        <item name="colorOnSurfaceVariant">@color/grey_700</item>
+        <item name="colorOutline">@color/grey_300</item>
+
+        <!-- ====================== ERRORES ======================= -->
+        <item name="colorError">@color/red_600</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorErrorContainer">@color/red_100</item>
+        <item name="colorOnErrorContainer">@color/red_900</item>
+
+        <!-- ================== TIPOGRAFÍA M3 ===================== -->
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.Material3.HeadlineLarge</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Material3.BodyLarge</item>
+
+        <!-- Fuente segura que siempre existe -->
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif</item>
+
+        <!-- ================== FORMA / ESQUINAS ================== -->
+        <item name="shapeAppearanceMediumComponent">@style/Shape.M3.Radius16</item>
+        <item name="shapeAppearanceLargeComponent">@style/Shape.M3.Radius24</item>
+
+        <!-- ========= BOTONES (TODOS EXISTEN) ==================== -->
+        <item name="materialButtonFilledStyle">@style/Widget.Material3.Button.TonalButton</item>
+        <item name="materialButtonFilledTonalStyle">@style/Widget.Material3.Button.TonalButton</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Material3.Button.OutlinedButton</item>
+        <item name="materialButtonTextStyle">@style/Widget.Material3.Button.TextButton</item>
+
+        <!-- ============= INPUTS (TEXT FIELDS) M3 ================ -->
+        <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.FilledBox.Dense</item>
+
+    </style>
+
+
+    <!-- ========================================================= -->
+    <!-- FINAL APP THEME                                           -->
+    <!-- ========================================================= -->
+    <style name="Theme.AppDelicia01" parent="Base.Theme.AppDelicia01" />
+
+
+    <!-- ========================================================= -->
+    <!-- SHAPES — Esquinas Redondeadas Globales (M3 recomendado)   -->
+    <!-- ========================================================= -->
+    <style name="Shape.M3.Radius16" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="Shape.M3.Radius24" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- ========================================================= -->
+    <!-- IMAGEN REDONDA (corregido)                               -->
+    <!-- ========================================================= -->
+    <style name="Shape.CircularImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- ShapeAppearance base requerido por Material 3 -->
+    <style name="ShapeAppearance.Material3" parent="ShapeAppearance.MaterialComponents.MediumComponent" />
+
+    <!-- Alias general "Shape" que algunos componentes del sistema piden -->
+    <style name="Shape" parent="ShapeAppearance.Material3" />
+
+
+</resources>

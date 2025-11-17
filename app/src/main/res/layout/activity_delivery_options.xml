@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".views.DeliveryOptionsActivity">
+
+    <!-- ====== TÍTULO ====== -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Elige una opción de entrega"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="?android:textColorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ====== TARJETA M3 PARA OPCIONES ====== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardDeliveryOptions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardElevation="1dp"
+        app:cardCornerRadius="18dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/gray_300"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+        <RadioGroup
+            android:id="@+id/rgDeliveryOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <RadioButton
+                android:id="@+id/rbPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recojo en Tienda"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/rbDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Delivery a Domicilio"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ====== DIRECCIÓN PARA DELIVERY ====== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardDeliveryAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="1dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/grey_300"
+        app:layout_constraintTop_toBottomOf="@id/cardDeliveryOptions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingresa tu dirección" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvDeliveryFee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Costo de envío: S/ 5.00"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ====== BOTÓN CONTINUAR ====== -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinueToPayment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Continuar al Pago"
+        android:padding="14dp"
+        app:cornerRadius="18dp"
+        style="?attr/materialButtonFilledStyle"
+        app:layout_constraintTop_toBottomOf="@id/cardDeliveryAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

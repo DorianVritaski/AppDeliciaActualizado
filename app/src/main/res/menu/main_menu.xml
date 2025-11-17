@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Ítem de Perfil/Login -->
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_person"
+        android:title="Mi Perfil"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_my_orders"
+        android:icon="@drawable/ic_list"
+        android:title="Mis Pedidos"
+        app:showAsAction="ifRoom"
+        android:visible="false"
+    />
+
+    <!-- ======================= ÍTEM MODIFICADO ======================= -->
+    <!-- Ítem para que el Admin vea el panel de pedidos -->
+    <item
+        android:id="@+id/action_admin_panel"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Ver Pedidos"
+        app:showAsAction="ifRoom" />
+    <!-- =============================================================== -->
+
+    <!-- Ítem para que el Admin agregue productos -->
+    <item
+        android:id="@+id/action_add_product"
+        android:icon="@drawable/ic_add"
+        android:title="Agregar Producto"
+        app:showAsAction="ifRoom" />
+
+</menu>

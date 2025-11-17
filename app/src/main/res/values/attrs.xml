@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Declaraciones de atributos para poder usar ?attr/materialButton* en layouts -->
+    <attr name="materialButtonFilledStyle" format="reference" />
+    <attr name="materialButtonFilledTonalStyle" format="reference" />
+    <attr name="materialButtonOutlinedStyle" format="reference" />
+    <attr name="materialButtonTextStyle" format="reference" />
+</resources>

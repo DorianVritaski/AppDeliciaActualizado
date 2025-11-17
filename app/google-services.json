@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "668772993430",
+    "project_id": "appdelicia-cf75e",
+    "storage_bucket": "appdelicia-cf75e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668772993430:android:ddf309f413d66eaeab35b7",
+        "android_client_info": {
+          "package_name": "com.example.appdelicia01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-ZcEZ_6gkLjWoRPyHaj7KtAt8dU7T9EI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
