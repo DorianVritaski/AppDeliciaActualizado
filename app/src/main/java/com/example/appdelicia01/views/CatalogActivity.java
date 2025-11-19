@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-// Import de Button ya no es necesario
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -35,9 +34,6 @@ public class CatalogActivity extends AppCompatActivity implements CatalogView, P
     private ProgressBar progressBarCatalog;
     private RecyclerView rvProducts;
     private Menu optionsMenu;
-
-    // --- El Button se ha eliminado ---
-
     private CatalogController controller;
     private static final String TAG = "CatalogActivity";
 
@@ -51,6 +47,10 @@ public class CatalogActivity extends AppCompatActivity implements CatalogView, P
         UserManager.getInstance().addUserDataChangeListener(this);
         controller.loadProducts();
         controller.checkUserRole();
+
+        // <-- CAMBIO: Registrar el RecyclerView para el menú contextual.
+        // Esto es crucial para que onContextItemSelected funcione.
+        registerForContextMenu(rvProducts);
     }
 
     private void setupUI() {
@@ -66,19 +66,38 @@ public class CatalogActivity extends AppCompatActivity implements CatalogView, P
         int numberOfColumns = 2;
         rvProducts.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
 
-        adapter = new ProductAdapter(new ArrayList<>(), this);
-        rvProducts.setAdapter(adapter);
+        // <-- CAMBIO: La inicialización del adaptador ahora está vacía.
+        // Se creará uno nuevo en displayProducts o showAdminOptions.
+        // Esto asegura que el rol de admin se asigne correctamente.
 
         fabCart = findViewById(R.id.fabCart);
         fabCart.setOnClickListener(v -> controller.onCartOptionClicked());
+    }
 
-        // --- La lógica del btnAdminPanel se ha eliminado de aquí ---
+    // <-- CAMBIO: Método para manejar la selección del menú contextual (al mantener presionado).
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        // Obtenemos la posición del producto desde el menú que creamos en el Adapter.
+        int position = item.getGroupId();
+
+        // Verificamos qué opción se seleccionó.
+        if (item.getItemId() == R.id.menu_edit_product) {
+            // Obtenemos el producto seleccionado usando la posición.
+            Product selectedProduct = adapter.getProductAt(position);
+            // Delegamos la lógica de navegación al controlador.
+            controller.onEditProductClicked(selectedProduct);
+            return true;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         controller.updateCartBadge();
+        // Es buena práctica verificar el rol también al volver a la actividad.
+        controller.checkUserRole();
     }
 
     @Override
@@ -110,7 +129,7 @@ public class CatalogActivity extends AppCompatActivity implements CatalogView, P
         } else if (itemId == R.id.action_admin_panel) {
             startActivity(new Intent(this, AdminOrdersActivity.class));
             return true;
-        } else if (itemId == R.id.action_my_orders) { // El case para 'Mis Pedidos' está correcto
+        } else if (itemId == R.id.action_my_orders) {
             startActivity(new Intent(this, MyOrdersActivity.class));
             return true;
         }
@@ -127,7 +146,10 @@ public class CatalogActivity extends AppCompatActivity implements CatalogView, P
 
     @Override
     public void displayProducts(List<Product> products) {
-        adapter.updateProducts(products);
+        // <-- CAMBIO: Se instancia el adaptador aquí para asegurar que tiene el rol correcto.
+        boolean isAdmin = UserManager.getInstance().isAdmin();
+        adapter = new ProductAdapter(products, isAdmin, this);
+        rvProducts.setAdapter(adapter);
     }
 
     @Override
@@ -146,38 +168,39 @@ public class CatalogActivity extends AppCompatActivity implements CatalogView, P
 
     @Override
     public void showAdminOptions(boolean isAdmin) {
+        // <-- CAMBIO: Actualizamos el adaptador existente si el rol cambia dinámicamente.
+        if (adapter != null) {
+            boolean currentIsAdmin = UserManager.getInstance().isAdmin();
+            // Recreamos el adaptador con la nueva lista de productos y el rol actualizado.
+            List<Product> currentProducts = adapter.getProducts(); // Necesitarás añadir este método al adapter.
+            adapter = new ProductAdapter(currentProducts, currentIsAdmin, this);
+            rvProducts.setAdapter(adapter);
+        }
+
         if (optionsMenu == null) {
             Log.w(TAG, "showAdminOptions: Se intentó actualizar la visibilidad, pero optionsMenu es nulo.");
             return;
         }
 
-        // --- INICIO DE LA CORRECCIÓN ---
-        // Determinar si hay un usuario logueado (sea admin o no)
         boolean isLoggedIn = UserManager.getInstance().getCurrentUserData() != null;
-
-        // Obtener todos los items del menú
         MenuItem addProductItem = optionsMenu.findItem(R.id.action_add_product);
         MenuItem adminPanelItem = optionsMenu.findItem(R.id.action_admin_panel);
         MenuItem myOrdersItem = optionsMenu.findItem(R.id.action_my_orders);
 
-        // Opciones de Administrador: Visibles solo si 'isAdmin' es true
-        if (addProductItem != null) {
-            addProductItem.setVisible(isAdmin);
-        }
-        if (adminPanelItem != null) {
-            adminPanelItem.setVisible(isAdmin);
-        }
-
-        // Opción de Cliente ("Mis Pedidos"): Visible si CUALQUIER usuario ha iniciado sesión
-        if (myOrdersItem != null) {
-            myOrdersItem.setVisible(isLoggedIn);
-        }
+        if (addProductItem != null) addProductItem.setVisible(isAdmin);
+        if (adminPanelItem != null) adminPanelItem.setVisible(isAdmin);
+        if (myOrdersItem != null) myOrdersItem.setVisible(isLoggedIn);
 
         Log.d(TAG, "Visibilidad de menú actualizada. Admin: " + isAdmin + ", Logueado: " + isLoggedIn);
-        // --- FIN DE LA CORRECCIÓN ---
     }
 
-    // ... (el resto de los métodos de la clase permanecen igual)
+    // <-- CAMBIO: Nuevo método de la interfaz CatalogView para manejar la navegación.
+    @Override
+    public void navigateToEditProduct(String productId) {
+        Intent intent = new Intent(this, EditProductActivity.class);
+        intent.putExtra("PRODUCT_ID", productId);
+        startActivity(intent);
+    }
 
     @Override
     public void navigateToLogin() {

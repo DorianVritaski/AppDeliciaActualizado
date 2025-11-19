@@ -47,6 +47,12 @@ public class AdminOrdersAdapter extends RecyclerView.Adapter<AdminOrdersAdapter.
         return orderList.size();
     }
 
+    public void updateOrders(List<Order> newOrderList) {
+        this.orderList.clear(); // Limpia la lista antigua
+        this.orderList.addAll(newOrderList); // Añade todos los nuevos pedidos
+        notifyDataSetChanged(); // Notifica al RecyclerView que los datos han cambiado y debe redibujarse
+    }
+
     class OrderViewHolder extends RecyclerView.ViewHolder {
         // 1. Declarar el nuevo TextView
         TextView tvOrderId, tvOrderDate, tvOrderTotal, tvOrderStatus, tvCustomerName;

@@ -15,5 +15,6 @@ public interface CatalogView {
     void navigateToAddProduct();
     void showProductAddedMessage(String productName, int quantity);
     void shareProduct(Product product);
+    void navigateToEditProduct(String productId);
 }
 

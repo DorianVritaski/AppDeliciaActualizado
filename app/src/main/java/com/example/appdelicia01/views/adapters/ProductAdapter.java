@@ -1,16 +1,19 @@
 package com.example.appdelicia01.views.adapters;
 
+import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-// Importar Glide
 import com.bumptech.glide.Glide;
 import com.example.appdelicia01.R;
 import com.example.appdelicia01.models.Product;
@@ -18,23 +21,19 @@ import com.example.appdelicia01.models.Product;
 import java.util.List;
 import java.util.Locale;
 
-
-import android.content.Context; // Necesario para el diálogo
-import android.widget.NumberPicker; // Importar NumberPicker
-
-import androidx.appcompat.app.AlertDialog;
-
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private List<Product> items;
     private Listener listener;
+    private boolean isAdmin;
 
     public interface Listener {
         void onAdd(Product p, int quantity);
         void onShare(Product p);
     }
 
-    public ProductAdapter(List<Product> items, Listener listener) {
+    public ProductAdapter(List<Product> items, boolean isAdmin, Listener listener) {
         this.items = items;
+        this.isAdmin = isAdmin;
         this.listener = listener;
     }
 
@@ -48,21 +47,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // La variable del producto actual se llama 'p'
         Product p = items.get(position);
 
         holder.txtName.setText(p.getName());
         holder.txtPrice.setText(String.format(Locale.getDefault(), "S/ %.2f", p.getPrice()));
-
-        // --- CORRECCIÓN: Usar la variable 'p' en lugar de 'product' ---
         holder.txtDescription.setText(p.getDescription());
 
-        // Cargar imagen desde URL con Glide
         Glide.with(holder.itemView.getContext())
                 .load(p.getImageUrl())
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_image)
                 .into(holder.imgProduct);
+
+        holder.bind(p, isAdmin);
 
         holder.btnAdd.setOnClickListener(v -> {
             showQuantityDialog(v.getContext(), p);
@@ -117,21 +114,62 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Devuelve la lista actual de productos que maneja el adaptador.
+     * Este método es necesario para que CatalogActivity pueda reconstruir el
+     * adaptador cuando el rol del usuario cambia sin perder los productos actuales.
+     * @return La lista de productos.
+     */
+    public List<Product> getProducts() {
+        return this.items;
+    }
+
+    /**
+     * Devuelve el producto en una posición específica de la lista.
+     * Utilizado para saber qué producto se seleccionó en el menú contextual.
+     * @param position La posición del item.
+     * @return El objeto Product en esa posición.
+     */
+    public Product getProductAt(int position) {
+        return items.get(position);
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         ImageView imgProduct;
-        TextView txtName, txtPrice, txtDescription; // Asegúrate de que txtDescription esté declarado aquí
+        TextView txtName, txtPrice, txtDescription;
         Button btnAdd;
         Button btnShare;
+        private boolean isAdmin = false;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgProduct = itemView.findViewById(R.id.imgProduct);
             txtName = itemView.findViewById(R.id.txtName);
             txtPrice = itemView.findViewById(R.id.txtPrice);
-            // --- CORRECCIÓN 2: Inicializar el TextView de la descripción ---
             txtDescription = itemView.findViewById(R.id.txtDescription);
             btnAdd = itemView.findViewById(R.id.btnAdd);
             btnShare = itemView.findViewById(R.id.btnShare);
+
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+        void bind(Product product, boolean isAdmin) {
+            this.isAdmin = isAdmin;
+            if (isAdmin) {
+                btnAdd.setVisibility(View.GONE);
+                btnShare.setVisibility(View.GONE);
+            } else {
+                btnAdd.setVisibility(View.VISIBLE);
+                btnShare.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            if (isAdmin) {
+                menu.setHeaderTitle("Acciones de Producto");
+                menu.add(this.getAdapterPosition(), R.id.menu_edit_product, 0, "Editar Producto");
+            }
         }
     }
 }

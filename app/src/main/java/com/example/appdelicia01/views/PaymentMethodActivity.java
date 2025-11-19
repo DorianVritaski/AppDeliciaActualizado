@@ -62,7 +62,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        if ("pickup".equals(deliveryMethod)) {
+        if ("Recojo en tienda".equals(deliveryMethod)) {
             // Si es recojo en tienda
             rbPayOnPickup.setVisibility(View.VISIBLE); // Mostrar "Pagar al Recoger"
             rbPayOnDelivery.setVisibility(View.GONE);

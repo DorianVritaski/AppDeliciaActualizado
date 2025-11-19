@@ -104,4 +104,17 @@ public class CatalogController {
             view.displayError("No tienes permiso para realizar esta acción.");
         }
     }
+
+    // <-- CAMBIO: Nuevo método para manejar el clic en "Editar Producto" del menú contextual.
+    public void onEditProductClicked(Product product) {
+        // Doble verificación para asegurar que solo un administrador puede editar.
+        if (userManager.isAdmin()) {
+            Log.d(TAG, "Navegando a la pantalla de edición para el producto con ID: " + product.getId());
+            // Le pedimos a la vista (CatalogActivity) que navegue y pase el ID del producto.
+            view.navigateToEditProduct(product.getId());
+        } else {
+            Log.w(TAG, "Intento no autorizado de editar el producto: " + product.getName());
+            view.displayError("No tienes permiso para editar productos.");
+        }
+    }
 }

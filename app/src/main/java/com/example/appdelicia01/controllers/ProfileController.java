@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+// --- PASO 1: IMPORTA LA CLASE 'Source' ---
+import com.google.firebase.firestore.Source;
 
 public class ProfileController {
 
@@ -34,29 +36,25 @@ public class ProfileController {
             return;
         }
 
+        // Al recargar el perfil, el `displayName` del objeto `currentUser` puede estar desactualizado.
+        // Por eso, es más seguro ir directamente a Firestore para obtener los datos frescos.
         final String email = currentUser.getEmail() != null ? currentUser.getEmail() : "Email no disponible";
-        String displayName = currentUser.getDisplayName();
-
-        if (displayName != null && !displayName.isEmpty()) {
-            Log.d(TAG, "Nombre cargado desde FirebaseUser.displayName: " + displayName);
-            view.displayUserProfile(displayName, email);
-            view.showLoading(false);
-        } else {
-            Log.d(TAG, "FirebaseUser.displayName está vacío. Cargando desde Firestore...");
-            loadNameFromFirestore(currentUser.getUid(), email);
-        }
+        Log.d(TAG, "Cargando perfil desde Firestore para asegurar datos actualizados...");
+        loadNameFromFirestore(currentUser.getUid(), email);
     }
 
     private void loadNameFromFirestore(String userId, final String email) {
         DocumentReference userDocRef = db.collection("users").document(userId);
-        userDocRef.get().addOnCompleteListener(task -> {
+
+        // --- PASO 2: AÑADE .get(Source.SERVER) PARA IGNORAR EL CACHÉ ---
+        userDocRef.get(Source.SERVER).addOnCompleteListener(task -> { // <-- CAMBIO CLAVE
             view.showLoading(false);
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document != null && document.exists()) {
                     String fullName = document.getString("fullName");
                     if (fullName != null && !fullName.isEmpty()) {
-                        Log.d(TAG, "Nombre cargado desde Firestore: " + fullName);
+                        Log.d(TAG, "Nombre cargado desde el SERVIDOR de Firestore: " + fullName);
                         view.displayUserProfile(fullName, email);
                     } else {
                         Log.w(TAG, "El campo 'fullName' no existe o está vacío en Firestore para UID: " + userId);

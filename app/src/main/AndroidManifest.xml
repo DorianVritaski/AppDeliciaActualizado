@@ -79,6 +79,9 @@
             android:name=".views.EditProfileActivity"
             android:exported="false"
             android:label="Editar Perfil" />
+        <activity
+            android:name=".views.EditProductActivity"
+            android:exported="false" />
 
     </application>
 </manifest>
